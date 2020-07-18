@@ -8,16 +8,15 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
     
         <!-- Bootstrap CSS -->
-        <!-- build:css css/main.css -->
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
         <link rel="stylesheet" href="css/styles.css">
-        <!-- endbuild -->
     <title>Ristorante Con Fusion</title>
 </head>
 
 <body>
+
     <nav class="navbar navbar-dark navbar-expand-sm fixed-top">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
@@ -32,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="contactus.html"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
                 </ul>  
                 <span class="navbar-text">
-                    <a id="loginModalOpen">
+                    <a data-toggle="modal" data-target="#loginModal">
                         <span class="fa fa-sign-in"></span> Login
                     </a>
                 </span>
@@ -46,7 +45,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Reserve a Table </h4>
-                    <button type="button" class="close" id="reserveModalClose">&times; </button>
+                    <button type="button" class="close" data-dismiss="modal">&times; </button>
                 </div>
 
                 <div class="modal-body">
@@ -89,7 +88,7 @@
                         <div class="form-group row">
 
                             <div class="col-md-10 offset-2 mt-2">
-                                <button type="button" class="btn btn-secondary btn" id="reserveModalCancel">Cancel</button>
+                                <button type="button" class="btn btn-secondary btn" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btn-primary" value="Reserve">
                             </div>
                         </div>
@@ -106,7 +105,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Login </h4>
-                    <button type="button" class="close" id="loginModalClose">&times; </button>
+                    <button type="button" class="close" data-dismiss="modal">&times; </button>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -128,7 +127,7 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <button type="button" class="btn btn-secondary btn-sm ml-auto" id="loginModalCancel">Cancel</button>
+                            <button type="button" class="btn btn-secondary btn-sm ml-auto" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary btn-sm ml-1">Sign in</button>        
                         </div>
                     </form>
@@ -150,7 +149,7 @@
                     <img src="img/logo.png" class="img-fluid">
                 </div>
                 <div class="col-12 col-sm align-self-center">
-                    <button type="button" class="btn-block btn-warning btn-lg text-black" id="reserveModalOpen">
+                    <button type="button" class="btn-block btn-warning btn-lg text-black" data-toggle="modal" data-target="#reserveModal">
                         <strong>Reserve Table</strong>
                     </button>
 
@@ -302,12 +301,30 @@
     </footer>
 
        <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
-       <!-- build:js js/main.js-->
        <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
        <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-       <script src="js/scripts.js"> </script>
-       <!--endbuild-->
+       <script>
+         $(document).ready(function(){
+             $("#mycarousel").carousel({interval:200});
+             $("#carouselButton").click(function(){
+                 if ($("#carouselButton").children("span").hasClass('fa-pause')){
+                     $("#mycarousel").carousel('pause');
+                     $("#carouselButton").children("span").removeClass('fa-pause');
+                     $("#carouselButton").children("span").addClass('fa-play');
+                 }
+                 else if($("#carouselButton").children("span").hasClass('fa-play')){
+                     $("#mycarousel").carousel('cycle');
+                     $("#carouselButton").children("span").removeClass('fa-play');
+                     $("#carouselButton").children("span").addClass('fa-pause');
+                 }
+             });
+
+             $("#carousel-play").click(function(){
+                 $("#mycarousel").carousel("cycle");
+             });
+         });
+       </script>
 
 </body>
 
