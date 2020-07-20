@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input,Row, Col, FormFeedback} from 'reactstrap';
+import {Breadcrumb, BreadcrumbItem, Button,  Label, Row, Col, FormFeedback} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
@@ -79,8 +79,7 @@ class Contact extends Component{
                                         <Control.text model=".firstname" id="firstname" name="firstname" placeholder="First Name" 
                                         className="form-control" validators={{
                                             required, minLength: minLength(3), maxLength: maxLength(15)
-                                        }}
-                                         />
+                                        }}/>
                                     <Errors
                                         className="text-danger"
                                         model=".firstname"
