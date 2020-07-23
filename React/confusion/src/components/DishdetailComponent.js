@@ -2,9 +2,10 @@ import React, {Component, useCallback} from 'react';
 import {Card, CardBody, CardTitle, CardText, CardImg, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody,Label,Row,Col, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import { addComment } from '../redux/ActionCreators';
+import { postComment } from '../redux/ActionCreators';
 import {Loading } from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
+import {FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
     const required = (val) => val && val.length;
@@ -24,7 +25,7 @@ import {baseUrl} from '../shared/baseUrl';
 
         handleSubmit(values){
             
-            this.props.addComment(this.props.dishId, values.rating, values.name, values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.name, values.comment);
     
         }
 
@@ -103,36 +104,48 @@ import {baseUrl} from '../shared/baseUrl';
     {
         return(
             <div className="col-12 col-md-5 m-1">
-                <Card>
-                    <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name}/>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
+                <FadeTransform in
+                    transformProps={{
+                        exitTransform: 'scale(0.5) translateY(-50%)'
+                    }}>
+                    <Card>
+                        <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name}/>
+                        <CardBody>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
+                        </CardBody>
+                    </Card>
+                </FadeTransform>
             </div>
         );
     }
 
-    function RenderComments({comments, addComment, dishId}){
+    function RenderComments({comments, postComment, dishId}){
         
+       
         const commentVar=comments.map((comments)=> {
             return(
+                <Fade in>
                 <li key= {comments.id} className="list-unstyled">
                     <p>{comments.comment}</p>
                     <p> --{comments.author},
                     &nbsp; {new Intl.DateTimeFormat('en-US', {year:'numeric', month:'short', day:'2-digit'}).format(new Date(Date.parse(comments.date)))}</p>
                 </li>
+                </Fade>
                
             );
         }
+        
         );
 
         return(
             <div className="col-12 col-md-5 m-1">
                 <h4>Comments</h4>
+            <Stagger in>
+
                 {commentVar}
-                <CommentForm dishId={dishId} addComment={addComment} />
+                </Stagger>
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
     }
@@ -176,7 +189,7 @@ import {baseUrl} from '../shared/baseUrl';
                     <div className="row">
                         <RenderDish dish = {props.dish}/>
                         <RenderComments comments = {props.comments}
-                          addComment={props.addComment}
+                          postComment={props.postComment}
                           dishId = {props.dish.id}
                         />
                         
