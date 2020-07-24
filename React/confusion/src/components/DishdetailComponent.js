@@ -144,7 +144,7 @@ import {FadeTransform, Fade, Stagger } from 'react-animation-components';
             <Stagger in>
 
                 {commentVar}
-                </Stagger>
+            </Stagger>
                 <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
